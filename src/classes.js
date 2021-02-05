@@ -1,4 +1,4 @@
-import { hasItem, isColor, isOpacity, getSize, flexJustify, isIn, isEqual, getFraction, isNegative, isInMap, isSize, isFraction, getColor, rgbaColor } from './util.js'
+import { hasItem, isColor, isOpacity, getSize, flexJustify, isIn, isEqual, getFraction, isNegative, isInMap, isSize, isFraction, getColor, rgbaColor } from './util'
 
 
 export const box = ({ B }) => `box-sizing: ${B}-box`
@@ -99,7 +99,7 @@ export const auto = ({ B, C }) => {
 export const gap = ({ B, C }) => `${{ x: 'column-gap', y: 'row-gap' }[B] || 'gap'}: ${getSize(C || B)}`
 
 // spacing for margins, padding, etc
-export const spacing = (prop, { A, B, neg }) => {
+const spacing = (prop, { A, B, neg }) => {
 	// format value
 	B = getSize(B, neg) || B
 

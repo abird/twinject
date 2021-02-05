@@ -1,4 +1,4 @@
-import { getRule } from '../src/inject.js'
+import { getRule } from '../src/getrule'
 import fs from 'fs'
 import readline from 'readline'
 

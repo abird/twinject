@@ -3,14 +3,18 @@
   "version": "1.0.0",
   "description": "Inject Tailwind CSS classes at runtime",
   "main": "index.js",
+  "repository": "https://github.com/abird/twinject",
   "type": "module",
   "scripts": {
     "test": "node test/test.js",
-    "build": "rollup -c rollup.config.js"
+    "build": "rollup -c rollup.config.js",
+    "start": "serve"
   },
   "author": "alanlbird",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "serve": "^11.3.2"
+  },
   "devDependencies": {
     "rollup": "^2.37.1",
     "rollup-plugin-terser": "^7.0.2",
