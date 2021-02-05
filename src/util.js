@@ -1,4 +1,4 @@
-import { colors, colorAliases } from './colors.js'
+import { colors, colorAliases } from './colors'
 
 export const hasItem = (container, item) => container.split('|').includes(item)
 
@@ -36,7 +36,7 @@ export const getSize = (value, neg) => {
 	if (value === 'px') {
 		return neg ? '-1px' : '1px'
 	}
-	const num = Number(value)
+	const num = +value
 	if (!isNaN(num)) {
 		return num ? `${num / 4 * (neg ? -1 : 1)}rem` : '0px'
 	}

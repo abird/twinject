@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Twinject Sample</title>
+	<script type="text/javascript" src="dist/twinject.js"></script>
+</head>
+
+<body>
+
+	<div class="flex justify-around h-100 rounded-lg m-4 p-4 text-xl bg-gray-200">
+		<div
+			class="rounded shadow-lg p-2 my-4 bg-teal-500 sm:bg-blue-500 md:bg-green-500 lg:bg-red-500 xl:bg-indigo-500 text-white">
+			Resize Window</div>
+		<div class="p-2 my-4 rounded bg-rose-500 hover:bg-green-500 text-rose-200">Hover Me</div>
+		<div
+			class="p-2 my-4 rounded bg-blue-500 text-blue-200 transform scale-60 sm:scale-70 md:scale-80 lg:scale-90 xl:scale-100 2xl:scale-110">
+			Resize Window</div>
+		<div class="p-2 my-4 rounded bg-yellow-500 hover:scale-105 hover:rotate-5 transform text-yellow-200">Hover Me
+		</div>
+		<div
+			class="p-2 my-4 h-20 self-center rounded bg-teal-500 text-teal-200 transform sm:rotate-45 md:rotate-90 lg:rotate-135 xl:rotate-180 2xl:rotate-270">
+			Resize Window</div>
+	</div>
+
+	<script>
+		twinject.addClasses('bg-rose-300 p-47')
+		console.log('"text-blue-700" CSS rule:', twinject.getRule('text-blue-700').rule)
+	</script>
+
+</body>
+
+</html>
