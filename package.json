@@ -1,6 +1,6 @@
 {
   "name": "twinject",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Inject Tailwind CSS classes at runtime",
   "main": "index.js",
   "keywords": "tailwind css",

@@ -12,7 +12,7 @@ With Twinject, you get the entire Tailwind class library in only 22 KB (8.5 KB g
 The simplest way to add Twinject is to add the following script tag to your `<head>` or `<body>` section:
 
 ```
-<script src="https://unpkg.com/twinject@1.0.0"></script>
+<script src="https://unpkg.com/twinject@1.0.2/twinject.js"></script>
 ```
 
 If you are using a Node build environment such as with Javascript libraries React or Vue, install Twinject from NPM:
