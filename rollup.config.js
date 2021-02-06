@@ -5,7 +5,7 @@ export default [
 		input: 'src/index.js',
 		output:
 		{
-			file: 'dist/twinject.js',
+			file: 'twinject.js',
 			plugins: [
 				terser(),
 			]

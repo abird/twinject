@@ -1,10 +1,15 @@
 {
   "name": "twinject",
-  "version": "2.0.0",
+  "version": "1.0.0",
   "description": "Inject Tailwind CSS classes at runtime",
   "main": "index.js",
+  "keywords": "tailwind css",
+  "license": "MIT",
+  "author": {
+    "name": "Alan Bird"
+  },
+  "main": "twinject.js",
   "repository": "https://github.com/abird/twinject",
-  "type": "module",
   "scripts": {
     "test": "node test/test.js",
     "build": "rollup -c rollup.config.js",

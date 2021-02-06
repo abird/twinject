@@ -1,4 +1,12 @@
 import { addClasses, disableAutoInstall, enableAutoInstall } from './inject'
 import { getRule } from './getrule'
 
-window.twinject = { addClasses, getRule, disableAutoInstall, enableAutoInstall }
+const twinject = { addClasses, getRule, disableAutoInstall, enableAutoInstall }
+
+if (typeof window !== 'undefined') {
+	window.twinject = twinject
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+	module.exports = twinject;
+}

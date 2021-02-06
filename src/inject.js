@@ -45,29 +45,31 @@ let styleSheet;
 function getStyleSheet() {
 	if (!styleSheet) {
 		// see if we've already installed a style sheet
-		for (let ss of document.styleSheets) {
-			if (ss.title === ssTitle) {
-				// cache all selectors
-				let rules = ss.rules || ss.cssRules;
-				for (let rule in rules) {
-					classesInstalled.add(rule.selectorText)
+		if (typeof window !== 'undefined') {
+			for (let ss of document.styleSheets) {
+				if (ss.title === ssTitle) {
+					// cache all selectors
+					let rules = ss.rules || ss.cssRules;
+					for (let rule in rules) {
+						classesInstalled.add(rule.selectorText)
+					}
+					return ss;
 				}
-				return ss;
 			}
+
+			// create stylesheet from style element
+			const style = document.createElement("style");
+			// console.log("Adding stylesheet:", ssTitle)
+			style.title = ssTitle
+			// WebKit hack :(
+			// console.log("WebKit hack")
+			style.appendChild(document.createTextNode(""));
+			document.head.appendChild(style);
+			// console.log('style:', style, 'stylesheet:', style.sheet, 'stylesheets:', document.styleSheets.length, document.styleSheets)
+			styleSheet = style.sheet;
+
+			addBaseStyles()
 		}
-
-		// create stylesheet from style element
-		const style = document.createElement("style");
-		// console.log("Adding stylesheet:", ssTitle)
-		style.title = ssTitle
-		// WebKit hack :(
-		// console.log("WebKit hack")
-		style.appendChild(document.createTextNode(""));
-		document.head.appendChild(style);
-		// console.log('style:', style, 'stylesheet:', style.sheet, 'stylesheets:', document.styleSheets.length, document.styleSheets)
-		styleSheet = style.sheet;
-
-		addBaseStyles()
 	}
 	return styleSheet;
 }
@@ -95,22 +97,23 @@ function addBaseStyles() {
 let observer;
 
 function observeClasses() {
-	observer = new MutationObserver(function (mutations) {
-		mutations.forEach(function (mutation) {
-			if (mutation.addedNodes) {
-				mutation.addedNodes.forEach(node => {
-					if (node.getAttribute) {
-						const className = node.getAttribute('class')
-						if (className) {
-							// console.log('Add class', className)
-							addClasses(className)
+	if (typeof window !== 'undefined') {
+		observer = new MutationObserver(function (mutations) {
+			mutations.forEach(function (mutation) {
+				if (mutation.addedNodes) {
+					mutation.addedNodes.forEach(node => {
+						if (node.getAttribute) {
+							const className = node.getAttribute('class')
+							if (className) {
+								// console.log('Add class', className)
+								addClasses(className)
+							}
 						}
-					}
-				})
-			}
+					})
+				}
+			});
 		});
-	});
-
+	}
 	observer && observer.observe(document, { subtree: true, childList: true });
 }
 
@@ -119,6 +122,9 @@ export function disableAutoInstall() {
 }
 
 export function enableAutoInstall() {
+	if (!observer) {
+		observeClasses()
+	}
 	observer && observer.observe(document, { subtree: true, childList: true });
 }
 

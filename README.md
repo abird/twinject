@@ -5,14 +5,14 @@ Twinject is a small library that dynamically injects Tailwind CSS classes into y
 
 [Tailwind CSS](https://tailwindcss.com) is an awesome collection of utility CSS classes that allow you to quickly and accurately get the style you want in your web pages. Although it's possible to include the CDN build in your website, it's not recommended because the default library is 2.7 MB (226 KB gzipped. Instead, you should set up a build environement including a PostCSS plugin that strips out the unused Tailwind classes reducing your css file down to a much smaller size.
 
-With Twinject, you get the entire Tailwind class library in only 22 KB (8.5 gzipped.) As a bonus, you also get every combination of screen sizes and variants (hover, focus, active, etc.) along with every color. Tailwind only supports a subset of the most common combinations. Also, with Twinject, classes with numbers support any value. For example, you can do a `w-68`, where Tailwind has no value between `w-64` and `w-72`.
+With Twinject, you get the entire Tailwind class library in only 22 KB (8.5 KB gzipped.) As a bonus, you also get every combination of screen sizes and variants (hover, focus, active, etc.) along with every color. Tailwind only supports a subset of the most common combinations. Also, with Twinject, classes with numbers support any value. For example, you can do a `w-68`, where Tailwind has no value between `w-64` and `w-72`.
 
 ## Installation
 
 The simplest way to add Twinject is to add the following script tag to your `<head>` or `<body>` section:
 
 ```
-<script src="https://unpkg.com/abird/dist/twinject.js"></script>
+<script src="https://unpkg.com/twinject@1.0.0"></script>
 ```
 
 If you are using a Node build environment such as with Javascript libraries React or Vue, install Twinject from NPM:
