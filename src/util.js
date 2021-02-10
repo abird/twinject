@@ -1,4 +1,4 @@
-import { colors, colorAliases } from './colors'
+import { colors, colorAliases } from './colors.js'
 
 export const hasItem = (container, item) => container.split('|').includes(item)
 

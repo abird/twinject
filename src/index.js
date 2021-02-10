@@ -1,5 +1,5 @@
-import { addClasses, disableAutoInstall, enableAutoInstall } from './inject'
-import { getRule } from './getrule'
+import { addClasses, disableAutoInstall, enableAutoInstall, insertRule } from './inject.js'
+import { getRule } from './getrule.js'
 
 const twinject = { addClasses, getRule, disableAutoInstall, enableAutoInstall }
 

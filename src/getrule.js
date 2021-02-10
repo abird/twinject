@@ -1,5 +1,6 @@
-import { hasItem } from './util'
-import { classMap, screenSizes } from './config'
+import { hasItem } from './util.js'
+import { classMap, screenSizes } from './config.js'
+import { customClasses } from './customclasses.js'
 
 const isVariant = name => hasItem('hover|focus|active|group-hover|group-focus|focus-within|focus-visible|motion-safe|motion-reduce|disabled|visited|checked|first|last|odd|even', name)
 

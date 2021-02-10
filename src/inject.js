@@ -1,5 +1,5 @@
-import { getRule } from './getrule'
-import { preflight } from './config'
+import { getRule } from './getrule.js'
+import { preflight } from './config.js'
 
 const ssTitle = 'twinject'
 const classesInstalled = new Set();

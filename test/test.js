@@ -1,4 +1,4 @@
-import { getRule } from '../src/getrule'
+import { getRule } from '../src/getrule.js'
 import fs from 'fs'
 import readline from 'readline'
 
