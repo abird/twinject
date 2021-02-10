@@ -1,7 +1,7 @@
 import { addClasses, disableAutoInstall, enableAutoInstall, insertRule } from './inject.js'
 import { getRule } from './getrule.js'
 
-const twinject = { addClasses, getRule, disableAutoInstall, enableAutoInstall }
+const twinject = { addClasses, getRule, disableAutoInstall, enableAutoInstall, insertRule }
 
 if (typeof window !== 'undefined') {
 	window.twinject = twinject

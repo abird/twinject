@@ -85,7 +85,7 @@ The build will be in the `dist` folder
 To use the Javascript API, do the following to get one or more API functions:
 
 ```
-import { addClasses, getRule, disableAutoInstall, enableAutoInstall } from 'twinject'
+import { addClasses, getRule, insertRule, disableAutoInstall, enableAutoInstall } from 'twinject'
 ```
 
 ### addClasses (class list)
@@ -109,6 +109,13 @@ This returns:
 `rule` contains the selector and declaration block
 
 `declarations` contains only the declaration block
+
+### insertRule (rule)
+Insert a CSS rule into the Twinject stylesheet. Can be used to add additional custom CSS rules.
+
+```
+insertRule('h1 { color: white; text-align: center; }')
+```
 
 ### disableAutoInstall ()
 Turns off auto injection of Tailwind classes. Do this if you want to selectively install classes using the `addClasses` function
