@@ -3,16 +3,16 @@
 
 Twinject is a small library that dynamically injects Tailwind CSS classes into your web page.
 
-[Tailwind CSS](https://tailwindcss.com) is an awesome collection of utility CSS classes that allow you to quickly and accurately get the style you want in your web pages. Although it's possible to include the CDN build in your website, it's not recommended because the default library is 2.7 MB (226 KB gzipped. Instead, you should set up a build environement including a PostCSS plugin that strips out the unused Tailwind classes reducing your css file down to a much smaller size.
+[Tailwind CSS](https://tailwindcss.com) is an awesome collection of utility CSS classes that allow you to quickly and accurately get the style you want in your web pages. Although it's possible to include the CDN build of Tailwind in your website, it's not recommended because the default library is 2.7 MB (226 KB gzipped.) Instead, you should set up a build environement including a PostCSS plugin that strips out the unused Tailwind classes reducing your CSS file down to a much smaller size.
 
-With Twinject, you get the entire Tailwind class library in only 22 KB (8.5 KB gzipped.) As a bonus, you also get every combination of screen sizes and variants (hover, focus, active, etc.) along with every color. Tailwind only supports a subset of the most common combinations. Also, with Twinject, classes with numbers support any value. For example, you can do a `w-68`, where Tailwind has no value between `w-64` and `w-72`.
+With Twinject, you get the entire Tailwind class library in only 22 KB (8.5 KB gzipped.) As a bonus, you also get every combination of screen sizes and variants (hover, focus, active, etc.) along with every color, whereas Tailwind only supports a subset of the most common combinations. Also, with Twinject, classes with numbers support any value. For example, you can do a `w-68`, where Tailwind has no values between `w-64` and `w-72`.
 
 ## Installation
 
 The simplest way to add Twinject is to add the following script tag to your `<head>` or `<body>` section:
 
 ```
-<script src="https://unpkg.com/twinject@1.0.2/twinject.js"></script>
+<script src="https://unpkg.com/twinject/twinject.js"></script>
 ```
 
 If you are using a Node build environment such as with Javascript libraries React or Vue, install Twinject from NPM:
@@ -56,12 +56,12 @@ then open your browser to <http://localhost:5000>
 
 ## Customization
 Doing your own build of Twinject allows you to do any of the follwing:
-* reduce the size of the Twinject library by removing Tailwind CSS classes you won't be using
+* reduce the size of the Twinject library by removing Tailwind CSS classes or colors you won't be using
 * add or remove colors
 * add or remove classes from the Preflight base styles
 * adjust screen size breakpoints
 
-You can remove classes by deleting or commenting out sections of `classMap` in the config.js file. Each key in the map is the first part of the class name. For example, the key for `bg-blue-100` is `bg`. You can also add classes, but instructions for doing that will be done at a later time.
+You can remove classes by deleting or commenting out sections of `classMap` in the config.js file. Each key in the map is the first part of the class name. For example, the key for `bg-blue-100` is `bg`.
 
 Preflight rules are defined in the `preflight` object in config.js
 
@@ -78,26 +78,35 @@ or
 ```
 yarn build
 ```
-The build will be in the `dist` folder
+
+### Custom Classes
+If you want to add your own utility classes or override a Tailwind utility class, use the `customclass.js` file, which includes an example that adds a `bg-stripes` class, which is a custom utility class used in Tailwind's online documentation. 
+
+To add a custom class, export a function that returns a CSS declaration block, which is one or more CSS declarations, such as: `"color: white; text-align: center"`. The function is passed an object with the following values:
+
+* cls: The full classname
+* A, B, C, D, E, BC: The classname is split by the dash character (-) into parts and passed as A-E. For example, the class `border-indigo-100` would be passed as `A='border', B='indigo', C='100', BC='indigo-100'`. BC is the 2nd and 3rd parts combined.
+* neg: Set to `true` if the class is a negative value such as `-inset-4`
+
 
 ## API
 
-To use the Javascript API, do the following to get one or more API functions:
+To use the Javascript API, use the global variable `tailwind` if you installed Twinject using a `<script>` tag. If you imported Twinject, do the following:
 
 ```
-import { addClasses, getRule, insertRule, disableAutoInstall, enableAutoInstall } from 'twinject'
+import * as twinject from 'twinject'
 ```
 
 ### addClasses (class list)
 Inject one or more Tailwind classes:
 ```
-addClasses('p-4 bg-indigo-500')
+twinject.addClasses('p-4 bg-indigo-500')
 ```
 
 ### getRule (class)
 Get the CSS rule for a Tailwind class.
 ```
-getRule('bg-rose-300')
+twinject.getRule('bg-rose-300')
 ```
 This returns:
 ```
@@ -114,11 +123,11 @@ This returns:
 Insert a CSS rule into the Twinject stylesheet. Can be used to add additional custom CSS rules.
 
 ```
-insertRule('h1 { color: white; text-align: center; }')
+twinject.insertRule('h1 { color: white; text-align: center; }')
 ```
 
 ### disableAutoInstall ()
-Turns off auto injection of Tailwind classes. Do this if you want to selectively install classes using the `addClasses` function
+Turns off auto injection of Tailwind classes. Do this if you want to selectively install classes using the `twinject.addClasses` function
 
 ### enableAutoInstall ()
 Re-enables auto injection of Tailwind classes

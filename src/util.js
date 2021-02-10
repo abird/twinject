@@ -8,7 +8,7 @@ export const isColor = ({ type, prop, B, C, D }, cb) => {
 		if (cb) {
 			return cb(color)
 		}
-		if (color.startsWith('#')) {
+		if (color.startsWith('#') && type) {
 			// deal with opacity
 			const opacityVar = `--tw-${type}-opacity`
 			let opacityRule = `${opacityVar}: 1;`
@@ -22,15 +22,15 @@ export const isColor = ({ type, prop, B, C, D }, cb) => {
 }
 
 export const isOpacity = ({ type, B, C }) =>
-	B === 'opacity' && `--tw-${type}-opacity: ${C / 100.0}`,
+	B === 'opacity' && `--tw-${type}-opacity: ${C / 100.0}`
 
-	flexJustify = justify => ({
-		start: 'flex-start',
-		end: 'flex-end',
-		between: 'space-between',
-		around: 'space-around',
-		evenly: 'space-evenly',
-	}[justify] || justify)
+export const flexJustify = justify => ({
+	start: 'flex-start',
+	end: 'flex-end',
+	between: 'space-between',
+	around: 'space-around',
+	evenly: 'space-evenly',
+}[justify] || justify)
 
 export const getSize = (value, neg) => {
 	if (value === 'px') {

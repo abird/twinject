@@ -1,4 +1,4 @@
-import { hasItem, isColor, isOpacity, getSize, flexJustify, isIn, isEqual, getFraction, isNegative, isInMap, isSize, isFraction, getColor, rgbaColor } from './util'
+import { hasItem, isColor, isOpacity, getSize, flexJustify, isIn, isEqual, getFraction, isNegative, isInMap, isSize, isFraction, getColor, rgbaColor } from './util.js'
 
 
 export const box = ({ B }) => `box-sizing: ${B}-box`

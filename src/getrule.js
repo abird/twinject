@@ -1,6 +1,6 @@
 import { hasItem } from './util.js'
 import { classMap, screenSizes } from './config.js'
-import { customClasses } from './customclasses.js'
+import * as customClasses from './customclasses.js'
 
 const isVariant = name => hasItem('hover|focus|active|group-hover|group-focus|focus-within|focus-visible|motion-safe|motion-reduce|disabled|visited|checked|first|last|odd|even', name)
 
@@ -60,19 +60,25 @@ function getDeclarations(cls) {
 		parts.shift()
 	}
 	let [type, value, ...rest] = parts
-	const getValue = classMap[type]
-	if (!getValue) {
-		// console.log("Unknown class:", cls)
-		return
+
+	const declWithClasses = classes => {
+		const getValue = classes[type]
+		if (!getValue) {
+			// console.log("Unknown class:", cls)
+			return
+		}
+
+		const
+			A = type,
+			B = value,
+			C = rest[0],
+			D = rest[1],
+			E = rest[2],
+			BC = C ? `${B}-${C}` : B,
+			neg = cls.startsWith('-')
+		let declarations = getValue({ cls, A, B, C, BC, D, E, neg });
+		return declarations;
 	}
 
-	const
-		A = type,
-		B = value,
-		C = rest[0],
-		D = rest[1],
-		BC = C ? `${B}-${C}` : B,
-		neg = cls.startsWith('-')
-	let declarations = getValue({ cls, A, B, C, BC, D, neg });
-	return declarations;
+	return declWithClasses(classMap) || declWithClasses(customClasses)
 }
