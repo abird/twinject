@@ -15,6 +15,7 @@ export function addClasses(classProps) {
 
 function addClass(cls) {
 	// see if class is already installed
+	// console.log("Adding classes:", cls)
 	if (classesInstalled.has(cls)) {
 		// already installed
 		// console.log('Already installed:', cls)
@@ -31,12 +32,14 @@ function installClass(cls) {
 	if (initrule) {
 		// has an init for a group
 		if (!initsInstalled.has(initgroup)) {
+			// console.log('Install init rule:', cls, rule)
 			insertRule(initrule)
 			initsInstalled.add(initgroup)
 		}
 	}
 
 	if (rule) {
+		// console.log('Install rule:', rule)
 		insertRule(rule)
 	}
 }
@@ -59,13 +62,10 @@ function getStyleSheet() {
 
 			// create stylesheet from style element
 			const style = document.createElement("style");
-			// console.log("Adding stylesheet:", ssTitle)
 			style.title = ssTitle
 			// WebKit hack :(
-			// console.log("WebKit hack")
 			style.appendChild(document.createTextNode(""));
 			document.head.appendChild(style);
-			// console.log('style:', style, 'stylesheet:', style.sheet, 'stylesheets:', document.styleSheets.length, document.styleSheets)
 			styleSheet = style.sheet;
 
 			addBaseStyles()
@@ -74,7 +74,7 @@ function getStyleSheet() {
 	return styleSheet;
 }
 
-function insertRule(rule) {
+export function insertRule(rule) {
 	const ss = getStyleSheet()
 	// console.log('Install rule:', rule)
 	try {
@@ -100,21 +100,31 @@ function observeClasses() {
 	if (typeof window !== 'undefined') {
 		observer = new MutationObserver(function (mutations) {
 			mutations.forEach(function (mutation) {
-				if (mutation.addedNodes) {
+				if (mutation.addedNodes.length) {
 					mutation.addedNodes.forEach(node => {
-						if (node.getAttribute) {
-							const className = node.getAttribute('class')
+						const processNode = node => {
+							const className = node.getAttribute && node.getAttribute('class')
 							if (className) {
-								// console.log('Add class', className)
 								addClasses(className)
 							}
+							// process any children
+							const children = node.children
+							if (children) {
+								for (let i = 0; i < children.length; i++) {
+									processNode(children[i])
+								}
+							}
 						}
+						processNode(node)
 					})
+				}
+				if (mutation.attributeName === 'class') {
+					addClasses(mutation.target.className)
 				}
 			});
 		});
 	}
-	observer && observer.observe(document, { subtree: true, childList: true });
+	observer && observer.observe(document, { subtree: true, childList: true, attributes: true, attributeFilter: ['class'] });
 }
 
 export function disableAutoInstall() {
@@ -125,8 +135,7 @@ export function enableAutoInstall() {
 	if (!observer) {
 		observeClasses()
 	}
-	observer && observer.observe(document, { subtree: true, childList: true });
 }
 
 // start observing...
-observeClasses()
+enableAutoInstall()
