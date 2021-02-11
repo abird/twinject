@@ -27,7 +27,7 @@ then import Twinject into the index page of your app:
 import 'twinject'
 ```
 
-## Installing Node modules
+### Installing Node modules
 If you will be making your own build or running the sample web page, you will first need to install the Node modules with the following:
 
 ```
@@ -88,6 +88,36 @@ To add a custom class, export a function that returns a CSS declaration block, w
 * A, B, C, D, E, BC: The classname is split by the dash character (-) into parts and passed as A-E. For example, the class `border-indigo-100` would be passed as `A='border', B='indigo', C='100', BC='indigo-100'`. BC is the 2nd and 3rd parts combined.
 * neg: Set to `true` if the class is a negative value such as `-inset-4`
 
+
+## Variables and Themes
+Twinject supports custom properties (sometimes called CSS variables). We call them variables. They are great for setting up themes in your web app. Currently, Twinject supports only color and size variables. Variables defined at the top of the web app can be use throughout the app. If you define color variables and use those variables throughout the app, by changing the color variables, you can change the color theme in the entire app. This is great for supporting dark and light modes.
+
+Variables are defined like this:
+```
+set-textColor-gray-700
+set-cardColor-indigo-300
+set-paragraphMargin-8
+set-boxPadding-4px
+```
+The word `set` is followed by the variable name. This name cannot contain a dash (-) or any other special characters. After the name is the value, which can be a color or a size.
+
+To use the variable, add a class where the value is the variable name preceded by a '@' (or '$') as the value. For example:
+
+
+```
+bg-@cardColor
+text-@textColor
+mt-@paragraphMargin
+p-$boxPadding
+```
+
+Variables are not supported in all Tailwind classes. These are the supported classes:
+
+#### Color
+`bg, border, text, ring, ring-offset, from, via, and to`
+
+#### Size
+`border width, m, p, w, h, top, right, bottom, left, leading, max-h, gap, and translate`
 
 ## API
 

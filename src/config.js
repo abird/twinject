@@ -1,4 +1,4 @@
-import { box, display, inline, table, object, overflow, overscroll, position, sticky, edge, inset, visibility, z, grid, rowcol, auto, gap, margin, padding, background, text, font, typo, not, strokeFill, tracking, leading, list, placeholder, rounded, border, flex, order, transition, duration, ease, delay, animate, shadow, opacity, size, minSize, maxSize, align, justify, place, scale, rotate, translate, skew, origin, transform, appearance, outline, pointer, resize, select, sr, gradient, ring, divide, space } from './classes.js'
+import { box, display, inline, table, object, overflow, overscroll, position, sticky, edge, inset, visibility, z, grid, rowcol, auto, gap, margin, padding, background, text, font, typo, not, strokeFill, tracking, leading, list, placeholder, rounded, border, flex, order, transition, duration, ease, delay, animate, shadow, opacity, size, minSize, maxSize, align, justify, place, scale, rotate, translate, skew, origin, transform, appearance, outline, pointer, resize, select, sr, gradient, ring, divide, space, set } from './classes.js'
 import { propDecl } from './util.js'
 
 export const classMap = {
@@ -146,6 +146,9 @@ export const classMap = {
 	// -- Miscellaneous --
 	stroke: strokeFill,
 	fill: strokeFill,
+
+	// -- Theme Vars --
+	set
 }
 
 export const preflight = [

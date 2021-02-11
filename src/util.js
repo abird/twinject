@@ -32,9 +32,13 @@ export const flexJustify = justify => ({
 	evenly: 'space-evenly',
 }[justify] || justify)
 
+export const isVar = value => /^(@|\$)/.test(value) && `var(--tw-var-${value.slice(1)})`
+
 export const getSize = (value, neg) => {
-	if (value === 'px') {
-		return neg ? '-1px' : '1px'
+	let result = isEqual(value, 'px', neg ? '-1px' : '1px')
+		|| isVar(value)
+	if (result) {
+		return result
 	}
 	const num = +value
 	if (!isNaN(num)) {
@@ -89,6 +93,7 @@ export function getColor(B, C, D) {
 		}
 		return color
 	}
+	return isVar(B)
 }
 
 export function rgbaColor(color, opacity) {

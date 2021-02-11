@@ -6,7 +6,7 @@ const isVariant = name => hasItem('hover|focus|active|group-hover|group-focus|fo
 
 export function getRule(cls) {
 	const fixedClass = cls.replace(/\\/g, '')
-	let [baseClass, class2] = fixedClass.split(' ')	// get first class
+	let [baseClass] = fixedClass.split(' ')	// get first class
 	baseClass = baseClass.split('::')[0]	// odd "placeholder" format
 	const parts = baseClass.split(':');
 	baseClass = parts.pop()
@@ -23,11 +23,9 @@ export function getRule(cls) {
 	if (declarations) {
 		let fullClass = cls;
 		let part = parts.pop()
-		// fix '/' for fractions and '.' for decimal numbers and ':' for breakpoints and initial digit
+		// fix '/' for fractions, '.' for decimal numbers, ':' for breakpoints, @ or $ for vars, and initial digit
 		fullClass = fullClass
-			.replace(/\//g, '\\/')
-			.replace(/\./g, '\\.')
-			.replace(/:/g, '\\:')
+			.replace(/[/.:@$]/g, '\\$&')
 			.replace(/^(\d)/, '\\3$1')
 		let preclass = ''
 		if (isVariant(part)) {

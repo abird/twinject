@@ -164,12 +164,6 @@ export const text = ({ B, C, D }) => {
 		'8xl': [6, 0],
 		'9xl': [8, 0],
 	}
-	const sizeInfo = textSizeMap[B]
-	if (sizeInfo) {
-		const [fs, lh] = sizeInfo
-		return `font-size: ${fs}rem; line-height: ${lh ? (lh + 'rem') : 1}`
-	}
-
 	return isInMap(B, textSizeMap, ([fs, lh]) => `font-size: ${fs}rem; line-height: ${lh ? (lh + 'rem') : 1}`)
 		|| isIn(B, 'left|right|center|justify', `text-align: ${B}`)
 		|| isColor({ type: 'text', prop: 'color', B, C, D })
@@ -633,3 +627,7 @@ export const space = ({ B, C, neg }) => {
 	}
 }
 
+export const set = ({ B, C, D, E, neg }) => {
+	const decl = getColor(C, D, E) || getSize(C, neg) || C
+	return `--tw-var-${B.replace(/^(@|\$)/, '')}: ${decl}`
+}

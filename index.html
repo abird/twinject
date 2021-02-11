@@ -12,17 +12,22 @@
 
 	<div class="flex justify-around h-100 rounded-lg m-4 p-4 text-xl bg-gray-200">
 		<div
-			class="rounded shadow-lg p-2 my-4 bg-teal-500 sm:bg-blue-500 md:bg-green-500 lg:bg-red-500 xl:bg-indigo-500 text-white">
-			Resize Window</div>
-		<div class="p-2 my-4 rounded bg-rose-500 hover:bg-green-500 text-rose-200">Hover Me</div>
-		<div
-			class="p-2 my-4 rounded bg-blue-500 text-blue-200 transform scale-60 sm:scale-70 md:scale-80 lg:scale-90 xl:scale-100 2xl:scale-110">
-			Resize Window</div>
-		<div class="p-2 my-4 rounded bg-yellow-500 hover:scale-105 hover:rotate-5 transform text-yellow-200">Hover Me
+			class="set-funColor-fuchsia-500 set-mySize-8 flex flex-col justify-around rounded shadow-@shadowSize w-40 p-4 space-y-4 my-4 bg-teal-500 text-md text-white">
+			<p class="text-center">Theme</p>
+			<div class="rounded shadow-lg w-full h-full p-@mySize bg-blue-300">
+				<div class="rounded shadow-lg w-full h-full bg-@funColor"></div>
+			</div>
+			<div class="rounded shadow-lg w-full h-full border border-@funColor border-4 bg-emerald-300"></div>
+			<div class="rounded shadow-lg w-full h-full p-@mySize bg-orange-300">
+				<div class="rounded shadow-lg w-full h-full bg-@funColor"></div>
+			</div>
 		</div>
 		<div
-			class="p-2 my-4 h-20 self-center rounded bg-teal-500 text-teal-200 transform sm:rotate-45 md:rotate-90 lg:rotate-135 xl:rotate-180 2xl:rotate-270">
+			class="rounded shadow-lg p-2 my-4 bg-teal-500 sm:bg-blue-500 md:bg-green-500 lg:bg-red-500 xl:bg-indigo-500 text-white transform scale-60 sm:scale-70 md:scale-80 lg:scale-90 xl:scale-100 2xl:scale-110">
 			Resize Window</div>
+		<div
+			class="p-2 my-4 rounded bg-rose-500 hover:bg-green-500 text-rose-200 hover:scale-105 hover:rotate-5 transform">
+			Hover Me</div>
 	</div>
 
 	<script>
