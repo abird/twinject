@@ -1,6 +1,6 @@
 {
   "name": "twinject",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "description": "Inject Tailwind CSS classes at runtime",
   "main": "twinject.js",
   "keywords": "tailwind css",
@@ -14,7 +14,6 @@
     "start": "serve"
   },
   "dependencies": {
-    "esbuild": "^0.8.43",
     "serve": "^11.3.2"
   },
   "devDependencies": {
