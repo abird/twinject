@@ -28,7 +28,7 @@ function addClass(cls) {
 
 
 function installClass(cls) {
-	const { rule, initrule, initgroup, postclass } = getRule(cls)
+	const { rule, initrule, initgroup, variant, screenSize } = getRule(cls)
 	if (initrule) {
 		// has an init for a group
 		if (!initsInstalled.has(initgroup)) {
@@ -40,7 +40,7 @@ function installClass(cls) {
 
 	if (rule) {
 		// console.log('Install rule:', rule)
-		insertRule(rule)
+		insertRule(rule, screenSize, variant)
 	}
 }
 
@@ -74,14 +74,41 @@ function getStyleSheet() {
 	return styleSheet;
 }
 
-export function insertRule(rule) {
+export function insertRule(rule, screenSize, variant) {
 	const ss = getStyleSheet()
 	// console.log('Install rule:', rule)
 	try {
-		ss.insertRule(rule, ss.cssRules.length)
+		// prioritize screensize before variant before class, higher priority goes last in stylesheet
+		const rules = ss.cssRules
+		const count = rules.length
+		let position = 0	// default to lowest priority
+		if (screenSize) {
+			// larger screen sizes are higher priority
+			for (position = count; position; position--) {
+				const rule = rules[position - 1]
+				if (rule.media) {
+					const match = rule.media.mediaText.match(/\d+/)
+					if (match && screenSize >= +match[0]) {
+						break
+					}
+				} else {
+					break
+				}
+			}
+		} else if (variant) {
+			// variant goes past any screensizes
+			for (position = count; position; position--) {
+				if (!rules[position - 1].media) {
+					break
+				}
+			}
+		}
+		ss.insertRule(rule, position)
 	}
 	catch (err) {
-		console.log("Error:", err, "inserting:", rule)
+		if (!/moz/.test(rule)) {
+			console.log(err, "inserting:", rule)
+		}
 	}
 }
 

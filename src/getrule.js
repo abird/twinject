@@ -19,7 +19,7 @@ export function getRule(cls) {
 		// include 'init'
 		({ initrule, initgroup, declarations, postclass } = declarations)
 	}
-	let rule
+	let rule, variant, screenSize
 	if (declarations) {
 		let fullClass = cls;
 		let part = parts.pop()
@@ -29,6 +29,7 @@ export function getRule(cls) {
 			.replace(/^(\d)/, '\\3$1')
 		let preclass = ''
 		if (isVariant(part)) {
+			variant = part
 			if (part.startsWith('group')) {
 				// group-hover or group-focus
 				preclass = `.${part.replace('-', ':')} `
@@ -42,12 +43,14 @@ export function getRule(cls) {
 			}
 			part = parts.pop()
 		}
+
 		rule = `${preclass}.${fullClass}${postclass || ''} {${declarations}}`
 		if (part && screenSizes[part]) {
+			screenSize = screenSizes[part]
 			rule = `@media (min-width: ${screenSizes[part]}px) {${rule}}`
 		}
 	}
-	return { rule, declarations, initrule, initgroup, postclass }
+	return { rule, declarations, initrule, initgroup, postclass, variant, screenSize }
 }
 
 function getDeclarations(cls) {
@@ -78,5 +81,5 @@ function getDeclarations(cls) {
 		return declarations;
 	}
 
-	return declWithClasses(classMap) || declWithClasses(customClasses)
+	return declWithClasses(customClasses) || declWithClasses(classMap)
 }
