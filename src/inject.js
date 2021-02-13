@@ -77,32 +77,34 @@ function getStyleSheet() {
 export function insertRule(rule, screenSize, variant) {
 	const ss = getStyleSheet()
 	// console.log('Install rule:', rule)
-	try {
-		// prioritize screensize before variant before class, higher priority goes last in stylesheet
-		const rules = ss.cssRules
-		const count = rules.length
-		let position = 0	// default to lowest priority
-		if (screenSize) {
-			// larger screen sizes are higher priority
-			for (position = count; position; position--) {
-				const rule = rules[position - 1]
-				if (rule.media) {
-					const match = rule.media.mediaText.match(/\d+/)
-					if (match && screenSize >= +match[0]) {
-						break
-					}
-				} else {
+
+	// prioritize screensize before variant before class, higher priority goes last in stylesheet
+	const rules = ss.cssRules
+	const count = rules.length
+	let position = 0	// default to lowest priority
+	if (screenSize) {
+		// larger screen sizes are higher priority
+		for (position = count; position; position--) {
+			const rule = rules[position - 1]
+			if (rule.media) {
+				const match = rule.media.mediaText.match(/\d+/)
+				if (match && screenSize >= +match[0]) {
 					break
 				}
-			}
-		} else if (variant) {
-			// variant goes past any screensizes
-			for (position = count; position; position--) {
-				if (!rules[position - 1].media) {
-					break
-				}
+			} else {
+				break
 			}
 		}
+	} else if (variant) {
+		// variant goes past any screensizes
+		for (position = count; position; position--) {
+			if (!rules[position - 1].media) {
+				break
+			}
+		}
+	}
+
+	try {
 		ss.insertRule(rule, position)
 	}
 	catch (err) {
@@ -110,6 +112,27 @@ export function insertRule(rule, screenSize, variant) {
 			console.log(err, "inserting:", rule)
 		}
 	}
+}
+
+export const insertClass = (className, declarations) => {
+	// replace @apply function
+	function replaceApply(match, classes) {
+		return classes.split(/\s+/).map(cls => {
+			const { declarations, variant } = getRule(cls)
+			if (variant) {
+				// add class for variant
+				insertRule(`.${className}:${variant}{${declarations}}`, null, variant)
+				return null
+			}
+			return declarations + ';';
+		}).filter(decl => decl).join(';')
+	}
+
+	// process any @apply directives
+	declarations = declarations.replace(/@apply\s+(.*?)(;|$)/g, replaceApply)
+
+	// console.log("Insert:", className, declarations)
+	return insertRule(`.${className}{${declarations}}`);
 }
 
 function addBaseStyles() {

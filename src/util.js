@@ -35,7 +35,7 @@ export const flexJustify = justify => ({
 export const isVar = value => /^(@|\$)/.test(value) && `var(--tw-var-${value.slice(1)})`
 
 export const getSize = (value, neg) => {
-	let result = isEqual(value, 'px', neg ? '-1px' : '1px')
+	let result = isInMap(value, { px: '1px', full: '100%' }, v => neg ? '-' + v : v)
 		|| isVar(value)
 	if (result) {
 		return result
@@ -56,9 +56,6 @@ export const isIn = (item, container, yes, no) => hasItem(container, item) ? yes
 export const isEqual = (item, value, yes, no) => item === value ? yes : no
 
 export const getFraction = (value, neg) => {
-	if (value === 'full') {
-		return neg ? '-100%' : '100%'
-	}
 	const [num, den] = value.split('/')
 	if (den) {
 		// fraction

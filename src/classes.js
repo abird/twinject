@@ -30,7 +30,7 @@ export const sticky = p => 'position: -webkit-sticky; ' + position(p)
 
 export const edge = ({ A, B, neg }) => {
 	let value =
-		{ full: '100%', auto: B, px: '1px' }[B] ||
+		{ auto: B }[B] ||
 		getFraction(B) ||
 		getSize(B) ||
 		B
@@ -409,8 +409,6 @@ export const size = ({ A, B }) => {
 	const dimString = ['width', 'height'][dim]
 	let map = {
 		auto: ['width: auto', 'height: auto'],
-		px: ['width: 1px', 'height: 1px'],
-		full: ['width: 100%', 'height: 100%'],
 		screen: ['width: 100vw', 'height: 100vh'],
 		min: ['width: -webkit-min-content; width: min-content'],
 		max: ['width: -webkit-max-content; width: max-content'],
@@ -421,17 +419,25 @@ export const size = ({ A, B }) => {
 		|| isSize(B, false, size => `${dimString}: ${size}`)
 }
 
-export const minSize = ({ cls }) => {
+export const minSize = ({ B, BC, C }) => {
 	const map = {
-		'min-w-0': 'min-width: 0px',
-		'min-w-full': 'min-width: 100%',
-		'min-w-min': 'min-width: -webkit-min-content; min-width: min-content',
-		'min-w-max': 'min-width: -webkit-max-content; min-width: max-content',
-		'min-h-0': 'min-height: 0px',
-		'min-h-full': 'min-height: 100%',
-		'min-h-screen': 'min-height: 100vh',
+		// 'min-w-0': 'min-width: 0px',
+		// 'min-w-full': 'min-width: 100%',
+		// 'min-h-0': 'min-height: 0px',
+		// 'min-h-full': 'min-height: 100%',
+
+		'w-min': 'min-width: -webkit-min-content; min-width: min-content',
+		'w-max': 'min-width: -webkit-max-content; min-width: max-content',
+		'h-screen': 'min-height: 100vh',
 	}
-	return map[cls];
+	let result = isInMap(BC, map);
+	if (result) {
+		return result
+	}
+	let size = getSize(C)
+	if (size) {
+		return `min-${{ w: 'width', h: 'height' }[B]}: ${size}`
+	}
 }
 
 export const maxSize = ({ B, C, D }) => {
@@ -466,8 +472,6 @@ export const maxSize = ({ B, C, D }) => {
 	}
 
 	const hMap = {
-		'px': '1px',
-		'full': '100%',
 		'screen': '100vh',
 	}
 	return (C in hMap) ? `max-height: ${hMap[C]}` : `max-height: ${getSize(C)}`
